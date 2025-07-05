@@ -76,8 +76,7 @@ static void parse_rc_file(void)
 		GFile *file = g_file_new_for_path (Xdialog.rc_file);		
 		
 		provider = gtk_css_provider_new();
-		s_provider = gtk_style_context_add_provider();
-		
+		s_provider= GTK_STYLE_PROVIDER(provider);
 		
 		if (gtk_css_provider_load_from_file (provider, file, NULL)) {
 			gtk_style_context_add_provider_for_screen(
