@@ -68,15 +68,15 @@ static void parse_rc_file(void)
 static void parse_rc_file(void)
 {
 	GtkCssProvider *provider;
-	gchar *rc_str = g_strdup("");
+	gchar *rc_str = "";
 	
 	if (strlen(Xdialog.rc_file) != 0) {
 		GFile *file = g_file_new_for_path (Xdialog.rc_file);		
 		provider = gtk_css_provider_new();
-		if (gtk_css_provider_load_from_file (GTK_STYLE_PROVIDER(provider), file, NULL)) {
+		if (gtk_css_provider_load_from_file (provider, file, NULL)) {
 			gtk_style_context_add_provider_for_screen(
 				gdk_screen_get_default(),
-				GTK_STYLE_PROVIDER(provider),
+				provider,
 				GTK_STYLE_PROVIDER_PRIORITY_USER
 			);
 		}
