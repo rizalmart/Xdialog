@@ -73,7 +73,7 @@ static void parse_rc_file(void)
 	if (strlen(Xdialog.rc_file) != 0) {
 		GFile *file = g_file_new_for_path (Xdialog.rc_file);		
 		provider = gtk_css_provider_new();
-		if (gtk_css_provider_load_from_file (provider, file, NULL)) {
+		if (gtk_css_provider_load_from_file (GTK_STYLE_PROVIDER(provider), file, NULL)) {
 			gtk_style_context_add_provider_for_screen(
 				gdk_screen_get_default(),
 				provider,
@@ -89,7 +89,7 @@ static void parse_rc_file(void)
 			(Xdialog.fixed_font_size ? Xdialog.fixed_font_size : DEFAULT_FIXED_FONT_SIZE)
 		);
 		provider = gtk_css_provider_new();		
-		if (gtk_css_provider_load_from_data (provider, rc_str, -1, NULL)) {
+		if (gtk_css_provider_load_from_data (GTK_STYLE_PROVIDER(provider), rc_str, -1, NULL)) {
 			gtk_style_context_add_provider_for_screen(
 				gdk_screen_get_default(),
 				provider,
@@ -234,7 +234,7 @@ static void set_window_size_and_placement(void)
 
 	/* Set the window placement policy */
 	if (Xdialog.set_origin)
-		gtk_window_move(Xdialog.window,
+		gtk_window_move(GTK_WINDOW(Xdialog.window),
 				Xdialog.xorg >= 0 ? (Xdialog.size_in_pixels ? Xdialog.xorg : Xdialog.xorg*xmult) :
 						    gdk_screen_width()  + Xdialog.xorg - Xdialog.xsize - 2*xmult,
 				Xdialog.yorg >= 0 ? (Xdialog.size_in_pixels ? Xdialog.yorg : Xdialog.yorg*ymult) :
