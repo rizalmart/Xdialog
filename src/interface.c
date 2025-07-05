@@ -68,7 +68,7 @@ static void parse_rc_file(void)
 static void parse_rc_file(void)
 {
 	GtkCssProvider *provider;
-	gchar *rc_str = NULL;
+	gchar *rc_str = g_strdup("");
 	
 	if (strlen(Xdialog.rc_file) != 0) {
 		GFile *file = g_file_new_for_path (Xdialog.rc_file);		
@@ -88,7 +88,8 @@ static void parse_rc_file(void)
 		rc_str = g_strdup_printf(FIXED_FONT_CSS_STRING,
 			(Xdialog.fixed_font_size ? Xdialog.fixed_font_size : DEFAULT_FIXED_FONT_SIZE)
 		);
-		provider = gtk_css_provider_new();		
+		provider = gtk_css_provider_new();
+		
 		if (gtk_css_provider_load_from_data (GTK_STYLE_PROVIDER(provider), rc_str, -1, NULL)) {
 			gtk_style_context_add_provider_for_screen(
 				gdk_screen_get_default(),
