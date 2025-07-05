@@ -68,36 +68,49 @@ static void parse_rc_file(void)
 static void parse_rc_file(void)
 {
 	GtkCssProvider *provider;
-	gchar *rc_str = NULL;
+	GtkStyleProvider *s_provider;
+	
+	gchar *rc_str = "";
 	
 	if (strlen(Xdialog.rc_file) != 0) {
 		GFile *file = g_file_new_for_path (Xdialog.rc_file);		
+		
 		provider = gtk_css_provider_new();
+		s_provider= GTK_STYLE_PROVIDER(provider);
+		
 		if (gtk_css_provider_load_from_file (provider, file, NULL)) {
 			gtk_style_context_add_provider_for_screen(
 				gdk_screen_get_default(),
-				provider,
+				s_provider,
 				GTK_STYLE_PROVIDER_PRIORITY_USER
 			);
 		}
+		
 		g_object_unref(file);
 		g_object_unref(provider);
+		g_object_unref(s_provider);
 	}
 
 	if (dialog_compat) {
+		
 		rc_str = g_strdup_printf(FIXED_FONT_CSS_STRING,
 			(Xdialog.fixed_font_size ? Xdialog.fixed_font_size : DEFAULT_FIXED_FONT_SIZE)
 		);
-		provider = gtk_css_provider_new();		
+		
+		provider = gtk_css_provider_new();
+		s_provider=GTK_STYLE_PROVIDER(provider);
+		
 		if (gtk_css_provider_load_from_data (provider, rc_str, -1, NULL)) {
 			gtk_style_context_add_provider_for_screen(
 				gdk_screen_get_default(),
-				provider,
+				s_provider,
 				GTK_STYLE_PROVIDER_PRIORITY_USER
 			);
 		}
+		
 		g_free(rc_str);
 		g_object_unref(provider);
+		g_object_unref(s_provider);
 	}
 }
 #endif
