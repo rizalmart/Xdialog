@@ -98,7 +98,7 @@ static void parse_rc_file(void)
 		);
 		
 		provider = gtk_css_provider_new();
-		s_provider=GTK_STYLE_PROVIDER(provider)
+		s_provider=GTK_STYLE_PROVIDER(provider);
 		
 		if (gtk_css_provider_load_from_data (s_provider, rc_str, -1, NULL)) {
 			gtk_style_context_add_provider_for_screen(
